@@ -3,8 +3,8 @@ import 'dart:ui';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-import 'Screen/Home.dart';
-import 'Service/Authentication.dart';
+import './HomeScreen.dart';
+import '../Service/Authentication.dart';
 
 class Login extends StatefulWidget {
   @override
@@ -63,21 +63,7 @@ class _LoginState extends State<Login> {
                   ],
                 ),
               ),
-              FutureBuilder(
-                      future: Authentication.initializeFirebase(context),
-                      builder: (context, snapshot) {
-                        if (snapshot.hasError) {
-                          return Text('Error initializing Firebase');
-                        } else if (snapshot.connectionState ==
-                            ConnectionState.done) {
-                          return _signInButton();
-                        }
-                        return CircularProgressIndicator(
-                          valueColor:
-                              AlwaysStoppedAnimation<Color>(Colors.orange),
-                        );
-                      },
-                    ),
+              _signInButton(),
             ],
           ),
         ),
@@ -103,7 +89,7 @@ class _LoginState extends State<Login> {
           if (user != null) {
             Navigator.of(context).pushReplacement(
               MaterialPageRoute(
-                builder: (context) => Home(
+                builder: (context) => HomeScreen(
                   user,
                 ),
               ),
